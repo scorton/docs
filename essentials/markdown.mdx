@@ -1,0 +1,138 @@
+---
+title: 'Markdown Syntax'
+description: 'Text, title, and styling in standard markdown for SchoolyAI documentation'
+icon: 'text-size'
+---
+
+## Titles
+
+Best used for section headers in your SchoolyAI documentation.
+
+```md
+## API Authentication
+```
+
+### Subtitles
+
+Best used for subsection headers like endpoint groups or feature explanations.
+
+```md
+### Student Management Endpoints
+```
+
+<Tip>
+
+Each **title** and **subtitle** creates an anchor and also shows up on the table of contents on the right, making it easy for users to navigate your SchoolyAI documentation.
+
+</Tip>
+
+## Text Formatting
+
+We support most markdown formatting. Simply add `**`, `_`, or `~` around text to format it.
+
+| Style         | How to write it   | Result          |
+| ------------- | ----------------- | --------------- |
+| Bold          | `**bold**`        | **bold**        |
+| Italic        | `_italic_`        | _italic_        |
+| Strikethrough | `~strikethrough~` | ~strikethrough~ |
+
+You can combine these. For example, write `**_bold and italic_**` to get **_bold and italic_** text.
+
+You need to use HTML to write superscript and subscript text. That is, add `<sup>` or `<sub>` around your text.
+
+| Text Size   | How to write it          | Result                 |
+| ----------- | ------------------------ | ---------------------- |
+| Superscript | `<sup>superscript</sup>` | <sup>superscript</sup> |
+| Subscript   | `<sub>subscript</sub>`   | <sub>subscript</sub>   |
+
+## Linking to Pages
+
+You can add a link by wrapping text in `[]()`. For example, `[SchoolyAI API](https://api.schoolyai.com)` links to [SchoolyAI API](https://api.schoolyai.com).
+
+Links to pages in your docs need to be root-relative. For example, `[API Reference](/api-reference/introduction)` links to the API introduction page.
+
+Relative links like `[link to text](../text)` will open slower because we cannot optimize them as easily.
+
+## Code Examples
+
+### API Requests
+
+Use code blocks to show API examples:
+
+```bash
+curl -X GET "https://api.schoolyai.com/v1/students" \
+  -H "Authorization: Bearer YOUR_API_KEY"
+```
+
+### JavaScript SDK
+
+```javascript
+import { SchoolyAI } from '@schoolyai/sdk';
+
+const client = new SchoolyAI('YOUR_API_KEY');
+const students = await client.students.list();
+```
+
+### Python SDK
+
+```python
+from schoolyai import SchoolyAI
+
+client = SchoolyAI('YOUR_API_KEY')
+students = client.students.list()
+```
+
+## Blockquotes
+
+### Singleline
+
+To create a blockquote, add a `>` in front of a paragraph.
+
+> SchoolyAI's AI-powered learning algorithms adapt to each student's unique learning style and pace.
+
+```md
+> SchoolyAI's AI-powered learning algorithms adapt to each student's unique learning style and pace.
+```
+
+### Multiline
+
+> SchoolyAI's AI-powered learning algorithms adapt to each student's unique learning style and pace.
+>
+> Our platform provides real-time feedback and personalized recommendations to optimize the learning experience.
+
+```md
+> SchoolyAI's AI-powered learning algorithms adapt to each student's unique learning style and pace.
+>
+> Our platform provides real-time feedback and personalized recommendations to optimize the learning experience.
+```
+
+## Tables
+
+Use tables to organize information like API parameters or feature comparisons:
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `student_id` | string | Yes | Unique identifier for the student |
+| `course_id` | string | Yes | Unique identifier for the course |
+| `progress` | number | No | Completion percentage (0-100) |
+
+## Mathematical Expressions
+
+SchoolyAI supports [LaTeX](https://www.latex-project.org) through the Latex component for mathematical content.
+
+<Latex>P(learning\_improvement) = \frac{AI\_assistance + student\_effort}{total\_time}</Latex>
+
+```md
+<Latex>P(learning\_improvement) = \frac{AI\_assistance + student\_effort}{total\_time}</Latex>
+```
+
+## Best Practices for SchoolyAI Documentation
+
+1. **Use clear, descriptive titles** that reflect the content
+2. **Include code examples** for all API endpoints
+3. **Add error handling examples** to help developers
+4. **Use consistent formatting** throughout your documentation
+5. **Include real-world use cases** and scenarios
+6. **Link related content** to help users navigate
+7. **Use tables** to organize complex information
+8. **Include tips and warnings** where appropriate

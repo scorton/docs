@@ -1,0 +1,119 @@
+---
+title: 'API Introduction'
+description: 'Learn how to integrate with SchoolyAI APIs'
+---
+
+# SchoolyAI API
+
+Welcome to the SchoolyAI API documentation. Our RESTful API allows you to integrate SchoolyAI's educational features into your applications, enabling you to create personalized learning experiences, manage educational content, and track student progress.
+
+## Base URL
+
+```bash
+https://api.schoolyai.com/v1
+```
+
+## Authentication
+
+All API requests require authentication using Bearer tokens. Include your API key in the Authorization header:
+
+```bash
+Authorization: Bearer YOUR_API_KEY
+```
+
+## Rate Limits
+
+- **Free Tier**: 1,000 requests per hour
+- **Pro Tier**: 10,000 requests per hour
+- **Enterprise**: Custom limits
+
+## Response Format
+
+All API responses are returned in JSON format with the following structure:
+
+```json
+{
+  "success": true,
+  "data": {
+    // Response data here
+  },
+  "message": "Operation completed successfully"
+}
+```
+
+## Error Handling
+
+When an error occurs, the API returns an appropriate HTTP status code and error details:
+
+```json
+{
+  "success": false,
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "message": "Invalid input parameters",
+    "details": {
+      "field": "email",
+      "issue": "Invalid email format"
+    }
+  }
+}
+```
+
+## Common HTTP Status Codes
+
+- `200` - Success
+- `201` - Created
+- `400` - Bad Request
+- `401` - Unauthorized
+- `403` - Forbidden
+- `404` - Not Found
+- `429` - Rate Limit Exceeded
+- `500` - Internal Server Error
+
+## SDKs and Libraries
+
+We provide official SDKs for popular programming languages:
+
+- [JavaScript/TypeScript SDK](https://github.com/SchoolyAI/sdk-js)
+- [Python SDK](https://github.com/SchoolyAI/sdk-python)
+- [Ruby SDK](https://github.com/SchoolyAI/sdk-ruby)
+
+## Getting Started
+
+1. [Sign up for an API key](https://dashboard.schoolyai.com/api-keys)
+2. Review the [authentication guide](/api-reference/authentication)
+3. Explore the available endpoints below
+4. Check out our [code examples](/api-reference/examples)
+
+## Available Endpoints
+
+<CardGroup cols={2}>
+  <Card
+    title="Students"
+    icon="user-graduate"
+    href="/api-reference/endpoint/students"
+  >
+    Manage student accounts and profiles
+  </Card>
+  <Card
+    title="Courses"
+    icon="book"
+    href="/api-reference/endpoint/courses"
+  >
+    Create and manage educational courses
+  </Card>
+  <Card
+    title="Lessons"
+    icon="chalkboard-teacher"
+    href="/api-reference/endpoint/lessons"
+  >
+    Handle lesson content and delivery
+  </Card>
+  <Card
+    title="Progress"
+    icon="chart-line"
+    href="/api-reference/endpoint/progress"
+  >
+    Track student learning progress
+  </Card>
+</CardGroup>

@@ -1,0 +1,223 @@
+---
+title: 'Development'
+description: 'Set up your development environment for SchoolyAI'
+---
+
+<Info>
+  **Prerequisite**: Please install Node.js (version 18 or higher) and Git before proceeding.
+</Info>
+
+## Setting Up Your Development Environment
+
+Follow these steps to set up your local development environment for contributing to SchoolyAI:
+
+### Step 1: Clone the Repository
+
+```bash
+git clone https://github.com/SchoolyAI/scorton-doc.git
+cd scorton-doc
+```
+
+### Step 2: Install Dependencies
+
+<CodeGroup>
+
+```bash npm
+npm install
+```
+
+```bash yarn
+yarn install
+```
+
+</CodeGroup>
+
+### Step 3: Set Up Environment Variables
+
+Create a `.env.local` file in the root directory:
+
+```bash
+cp .env.example .env.local
+```
+
+Edit the `.env.local` file with your configuration:
+
+```env
+# API Configuration
+NEXT_PUBLIC_API_URL=https://api.schoolyai.com/v1
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+
+# Authentication
+NEXTAUTH_SECRET=your-secret-key
+NEXTAUTH_URL=http://localhost:3000
+
+# Database (if using local development)
+DATABASE_URL=your-database-url
+
+# External Services
+OPENAI_API_KEY=your-openai-key
+STRIPE_SECRET_KEY=your-stripe-key
+```
+
+### Step 4: Run the Development Server
+
+```bash
+npm run dev
+```
+
+Your local development server will be available at `http://localhost:3000`.
+
+### Custom Ports
+
+By default, the development server uses port 3000. You can customize the port by using the `--port` flag:
+
+```bash
+npm run dev -- --port 3333
+```
+
+## Project Structure
+
+```
+scorton-doc/
+├── docs/                 # Documentation files
+│   ├── api-reference/    # API documentation
+│   ├── essentials/       # Core concepts
+│   └── ...
+├── src/                  # Source code
+│   ├── components/       # React components
+│   ├── pages/           # Next.js pages
+│   └── utils/           # Utility functions
+├── public/              # Static assets
+└── package.json         # Dependencies and scripts
+```
+
+## Available Scripts
+
+<CodeGroup>
+
+```bash npm
+npm run dev          # Start development server
+npm run build        # Build for production
+npm run start        # Start production server
+npm run lint         # Run ESLint
+npm run test         # Run tests
+npm run type-check   # Run TypeScript type checking
+```
+
+```bash yarn
+yarn dev             # Start development server
+yarn build           # Build for production
+yarn start           # Start production server
+yarn lint            # Run ESLint
+yarn test            # Run tests
+yarn type-check      # Run TypeScript type checking
+```
+
+</CodeGroup>
+
+## Code Quality
+
+### Linting and Formatting
+
+We use ESLint and Prettier for code quality. The project includes pre-commit hooks that automatically format your code:
+
+```bash
+npm run lint:fix
+```
+
+### TypeScript
+
+This project uses TypeScript for type safety. Run type checking:
+
+```bash
+npm run type-check
+```
+
+### Testing
+
+Run the test suite:
+
+```bash
+npm run test
+```
+
+For watch mode during development:
+
+```bash
+npm run test:watch
+```
+
+## Documentation Development
+
+### Preview Documentation Changes
+
+To preview documentation changes locally:
+
+```bash
+npm run docs:dev
+```
+
+This will start the documentation server at `http://localhost:3001`.
+
+### Building Documentation
+
+Build the documentation for production:
+
+```bash
+npm run docs:build
+```
+
+## Deployment
+
+### Staging Environment
+
+Deploy to staging:
+
+```bash
+npm run deploy:staging
+```
+
+### Production Environment
+
+Deploy to production:
+
+```bash
+npm run deploy:production
+```
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Port 3000 is already in use">
+    The development server will automatically try the next available port. You can also manually specify a different port:
+    ```bash
+    npm run dev -- --port 3001
+    ```
+  </Accordion>
+
+  <Accordion title="Database connection issues">
+    Ensure your database is running and the connection string in `.env.local` is correct. For local development, you can use Docker:
+    ```bash
+    docker-compose up -d
+    ```
+  </Accordion>
+
+  <Accordion title="API key issues">
+    Make sure your API keys are properly set in the `.env.local` file. You can get test API keys from the SchoolyAI dashboard.
+  </Accordion>
+</AccordionGroup>
+
+## Contributing
+
+1. **Fork the repository**
+2. **Create a feature branch**: `git checkout -b feature/your-feature-name`
+3. **Make your changes** and commit them: `git commit -m 'Add your feature'`
+4. **Push to the branch**: `git push origin feature/your-feature-name`
+5. **Submit a pull request**
+
+## Need Help?
+
+- **Documentation**: Check our comprehensive documentation
+- **Issues**: Report bugs on [GitHub Issues](https://github.com/SchoolyAI/scorton-doc/issues)
+- **Discussions**: Join our [GitHub Discussions](https://github.com/SchoolyAI/scorton-doc/discussions)
+- **Support**: Contact us at dev-support@schoolyai.com
