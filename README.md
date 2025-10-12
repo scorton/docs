@@ -1,6 +1,6 @@
-# SchoolyAI Documentation
+# Scorton Documentation
 
-This repository contains the comprehensive documentation for SchoolyAI, an AI-powered educational platform that revolutionizes the way students learn and educators teach.
+This repository contains the comprehensive documentation for scorton, an AI-powered trust as a service platform that revolutionizes the way students learn and educators teach.
 
 ## Overview
 
