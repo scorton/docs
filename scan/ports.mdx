@@ -1,0 +1,78 @@
+---
+title: "Ports Scan"
+description: "Scan TCP ports and banner metadata using the Scorton API"
+api: true
+---
+
+## Ports Scan
+
+The `ports` endpoint scans TCP ports on a target host and optionally collects banner metadata for detected services.
+
+---
+
+## Endpoint
+
+`POST https://api.scorton.tech/scan/ports`
+
+### Authentication
+
+Authorization: `Bearer <YOUR_API_KEY>`.
+
+### Request Body
+
+```json
+{
+  "host": "93.184.216.34",
+  "ports": [80, 443, 22, 25],
+  "scanType": "connect",
+  "timeoutMs": 9000
+}
+```
+
+### Response (200)
+
+```json
+{
+  "host": "93.184.216.34",
+  "results": [
+    { "port": 22, "state": "closed" },
+    { "port": 25, "state": "filtered" },
+    { "port": 80, "state": "open", "service": { "name": "http", "banner": "nginx" } },
+    { "port": 443, "state": "open", "service": { "name": "https", "tls": true } }
+  ],
+  "scanAt": "2025-10-13T14:44:21Z"
+}
+```
+
+### Error (4xx)
+
+```json
+{
+  "error": {
+    "code": "INVALID_INPUT",
+    "message": "Host must be a valid IPv4/IPv6 or domain; ports must be 1-65535"
+  }
+}
+```
+
+### cURL Example
+
+```bash
+curl -X POST 'https://api.scorton.tech/scan/ports' \
+  -H 'Authorization: Bearer YOUR_API_KEY' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "host": "93.184.216.34",
+    "ports": [80,443,22,25],
+    "scanType": "connect",
+    "timeoutMs": 9000
+  }'
+```
+
+### Verification
+
+- Validate `results` contains each requested port with a `state`.
+- For `open` ports, check optional `service` metadata.
+
+
+

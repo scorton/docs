@@ -1,0 +1,81 @@
+---
+title: "SSL/TLS Scan"
+description: "Evaluate SSL/TLS configuration using the Scorton API"
+api: true
+---
+
+## SSL/TLS Scan
+
+The `ssl` endpoint evaluates a host's TLS configuration, certificate chain, expiration, and security posture (protocols/ciphers).
+
+---
+
+## Endpoint
+
+`POST https://api.scorton.tech/scan/ssl`
+
+### Authentication
+
+Authorization: `Bearer <YOUR_API_KEY>`.
+
+### Request Body
+
+```json
+{
+  "host": "example.com",
+  "port": 443,
+  "timeoutMs": 12000
+}
+```
+
+### Response (200)
+
+```json
+{
+  "host": "example.com",
+  "port": 443,
+  "certificate": {
+    "subject": "CN=example.com",
+    "issuer": "CN=Let's Encrypt Authority X4",
+    "validFrom": "2025-08-14T00:00:00Z",
+    "validTo": "2025-11-12T00:00:00Z",
+    "serialNumber": "04AB..."
+  },
+  "chainOk": true,
+  "protocols": ["TLSv1.2", "TLSv1.3"],
+  "weakCiphersDetected": false,
+  "ocspStapling": true
+}
+```
+
+### Error (4xx)
+
+```json
+{
+  "error": {
+    "code": "TLS_HANDSHAKE_FAILED",
+    "message": "Handshake failed or certificate could not be validated"
+  }
+}
+```
+
+### cURL Example
+
+```bash
+curl -X POST 'https://api.scorton.tech/scan/ssl' \
+  -H 'Authorization: Bearer YOUR_API_KEY' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "host": "example.com",
+    "port": 443,
+    "timeoutMs": 12000
+  }'
+```
+
+### Verification
+
+- Ensure `validTo` is in the future and `chainOk` is true.
+- Confirm `protocols` include modern versions and `weakCiphersDetected` is false.
+
+
+

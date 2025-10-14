@@ -1,10 +1,10 @@
-# Scorton Documentation
+# Scorton
 
-This repository contains the comprehensive documentation for scorton, an AI-powered trust as a service platform that revolutionizes the way students learn and educators teach.
+This repository contains the comprehensive documentation for SchoolyAI by Scorton, an AI-powered trust as a service platform that revolutionizes the way students learn and educators teach.
 
 ## Overview
 
-SchoolyAI combines cutting-edge artificial intelligence with proven educational methodologies to create personalized learning experiences. Our platform offers:
+ Scorton combines cutting-edge artificial intelligence with proven educational methodologies to create personalized learning experiences. Our platform offers:
 
 - **AI-Powered Learning**: Personalized learning paths for each student
 - **Comprehensive Course Management**: Create, organize, and deliver educational content
@@ -38,8 +38,8 @@ docs/
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/SchoolyAI/scorton-doc.git
-   cd scorton-doc
+   git clone https://github.com/SchoolyAI/docs.git
+   cd docs
    ```
 
 2. **Install dependencies**:
@@ -93,7 +93,7 @@ Documentation is automatically deployed when changes are pushed to the main bran
 
 ## Support
 
-- **Documentation Issues**: Report problems with the documentation on [GitHub Issues](https://github.com/SchoolyAI/scorton-doc/issues)
+- **Documentation Issues**: Report problems with the documentation on [GitHub Issues](https://github.com/SchoolyAI/docs/issues)
 - **Platform Support**: Contact our support team at support@schoolyai.com
 - **Community**: Join our [GitHub Discussions](https://github.com/SchoolyAI/scorton-doc/discussions)
 

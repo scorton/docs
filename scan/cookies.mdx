@@ -1,0 +1,89 @@
+---
+title: "Cookies Scan"
+description: "Analyze cookie security attributes using the Scorton API"
+api: true
+---
+
+## Cookies Scan
+
+The `cookies` endpoint inspects HTTP response cookies for security attributes and best practices (Secure, HttpOnly, SameSite, max-age).
+
+---
+
+## Endpoint
+
+`POST https://api.scorton.tech/scan/cookies`
+
+### Authentication
+
+Authorization: `Bearer <YOUR_API_KEY>`.
+
+### Request Body
+
+```json
+{
+  "url": "https://example.com",
+  "followRedirects": true,
+  "timeoutMs": 10000
+}
+```
+
+### Response (200)
+
+```json
+{
+  "url": "https://example.com",
+  "cookies": [
+    {
+      "name": "session",
+      "secure": true,
+      "httpOnly": true,
+      "sameSite": "Lax",
+      "maxAge": 1800
+    },
+    {
+      "name": "prefs",
+      "secure": false,
+      "httpOnly": false,
+      "sameSite": "None",
+      "maxAge": null
+    }
+  ],
+  "signals": {
+    "insecureCookies": ["prefs"],
+    "missingSameSite": []
+  }
+}
+```
+
+### Error (4xx)
+
+```json
+{
+  "error": {
+    "code": "FETCH_FAILED",
+    "message": "Could not fetch or parse Set-Cookie headers"
+  }
+}
+```
+
+### cURL Example
+
+```bash
+curl -X POST 'https://api.scorton.tech/scan/cookies' \
+  -H 'Authorization: Bearer YOUR_API_KEY' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "url": "https://example.com",
+    "followRedirects": true,
+    "timeoutMs": 10000
+  }'
+```
+
+### Verification
+
+- Review `signals.insecureCookies` is empty for secure apps.
+- Cookies should have `secure`, `httpOnly`, and appropriate `sameSite`.
+
+
+
