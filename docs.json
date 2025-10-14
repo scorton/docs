@@ -1,11 +1,11 @@
 {
-  "$schema": "https://mintlify.com/docs.json",
-  "theme": "mint",
-  "name": "SchoolyAI Documentation",
+  "$schema": "https://docs.scorton.tech/docs.json",
+  "theme": "linden",
+  "name": "Scorton",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#F2C94C",
+    "light": "#FFF9E6",
+    "dark": "#F2C94C"
   },
   "favicon": "/favicon.svg",
   "navigation": {
@@ -24,12 +24,9 @@
           {
             "group": "Essentials",
             "pages": [
-              "essentials/markdown",
               "essentials/code",
-              "essentials/images",
               "essentials/settings",
-              "essentials/navigation",
-              "essentials/reusable-snippets"
+              "essentials/navigation"
             ]
           }
         ]
@@ -59,12 +56,12 @@
       "anchors": [
         {
           "anchor": "GitHub",
-          "href": "https://github.com/SchoolyAI",
+          "href": "https://github.com/scorton",
           "icon": "github"
         },
         {
           "anchor": "Support",
-          "href": "mailto:support@schoolyai.com",
+          "href": "mailto:team@scorton.tech",
           "icon": "envelope"
         }
       ]
@@ -78,18 +75,18 @@
     "links": [
       {
         "label": "Support",
-        "href": "mailto:support@schoolyai.com"
+        "href": "https://scorton.tech/support"
       }
     ],
     "primary": {
       "type": "button",
       "label": "Get Started",
-      "href": "/quickstart"
+      "href": "https://scorton.tech/quickstart"
     }
   },
   "footer": {
     "socials": {
-      "github": "https://github.com/SchoolyAI"
+      "github": "https://github.com/scorton"
     }
   }
 }

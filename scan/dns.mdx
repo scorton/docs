@@ -1,0 +1,90 @@
+---
+title: "DNS Scan"
+description: "Perform a DNS analysis using the Scorton API"
+api: true
+---
+
+## DNS Scan
+
+The `dns` endpoint resolves and analyzes DNS records for a given target as part of Scorton's scan engine. Use it to fetch A/AAAA, CNAME, MX, NS, TXT, and SOA records and basic DNS hygiene signals.
+
+---
+
+## Endpoint
+
+`POST https://api.scorton.tech/scan/dns`
+
+### Authentication
+
+Send your API key via the `Authorization` header: `Bearer <YOUR_API_KEY>`.
+
+### Request Body
+
+```json
+{
+  "target": "example.com",
+  "types": ["A", "AAAA", "CNAME", "MX", "NS", "TXT", "SOA"],
+  "resolveCnames": true,
+  "timeoutMs": 8000
+}
+```
+
+### Response (200)
+
+```json
+{
+  "target": "example.com",
+  "resolvedAt": "2025-10-13T14:30:11Z",
+  "records": {
+    "A": ["93.184.216.34"],
+    "AAAA": ["2606:2800:220:1:248:1893:25c8:1946"],
+    "CNAME": [],
+    "MX": [{ "host": "mx1.mail.example.com", "priority": 10 }],
+    "NS": ["ns1.example.com", "ns2.example.com"],
+    "TXT": ["v=spf1 include:_spf.example.com ~all"],
+    "SOA": {
+      "mname": "ns1.example.com",
+      "rname": "hostmaster.example.com",
+      "serial": 2025101301
+    }
+  },
+  "hygiene": {
+    "hasSpf": true,
+    "hasDmarc": false,
+    "hasDnssec": true
+  }
+}
+```
+
+### Error (4xx)
+
+```json
+{
+  "error": {
+    "code": "INVALID_TARGET",
+    "message": "Target must be a valid domain name"
+  }
+}
+```
+
+### cURL Example
+
+```bash
+curl -X POST 'https://api.scorton.tech/scan/dns' \
+  -H 'Authorization: Bearer YOUR_API_KEY' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "target": "example.com",
+    "types": ["A","MX","NS","TXT"],
+    "resolveCnames": true,
+    "timeoutMs": 8000
+  }'
+```
+
+### Verification
+
+- Ensure `records` contains the requested types.
+- Confirm `hygiene` flags reflect DNS configuration (SPF/DMARC/DNSSEC).
+
+
+

@@ -1,0 +1,311 @@
+{
+  "openapi": "1.0.0",
+  "info": {
+    "title": "Scorton API",
+    "description": "Official OpenAPI specification for the Scorton API — powering Cyberscor with advanced cybersecurity scanning and analysis capabilities.",
+    "license": {
+      "name": "Proprietary © Scorton"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.scorton.tech",
+      "description": "Scorton API 1.0 — Production server"
+    },
+    {
+      "url": "https://sandbox.scorton.tech",
+      "description": "Sandbox environment for testing and development"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "summary": "Authenticate user",
+        "description": "Generates a JWT token for valid user credentials.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "JWT authentication token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/scan/domain": {
+      "post": {
+        "summary": "Launch domain scan",
+        "description": "Performs a complete security scan of a domain, including DNS, WHOIS, headers, SSL/TLS, open ports, XSS, and cookie validation.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ScanRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Scan results summary",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScanResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input or unsupported target",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/scan/{id}": {
+      "get": {
+        "summary": "Get scan results",
+        "description": "Retrieves detailed scan results using a unique scan ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Unique identifier for the scan job",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Full scan report",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScanResult"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Scan not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete scan record",
+        "description": "Deletes a stored scan result by ID. Only accessible to authenticated users.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Scan ID to delete"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Scan successfully deleted",
+            "content": {}
+          },
+          "400": {
+            "description": "Invalid ID or deletion error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "webhooks": {
+    "/scan/webhook": {
+      "post": {
+        "description": "Triggered when a scan completes. Sends a JSON payload with scan metadata and security score.",
+        "requestBody": {
+          "description": "Scan completion payload",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ScanWebhook"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Acknowledged successfully"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "LoginRequest": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "user@scorton.tech"
+          },
+          "password": {
+            "type": "string",
+            "format": "password"
+          }
+        }
+      },
+      "LoginResponse": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "JWT access token"
+          },
+          "expires_in": {
+            "type": "integer",
+            "description": "Token expiration time in seconds"
+          }
+        }
+      },
+      "ScanRequest": {
+        "type": "object",
+        "required": ["target"],
+        "properties": {
+          "target": {
+            "type": "string",
+            "example": "example.com"
+          },
+          "modules": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["dns", "whois", "headers", "ssl", "ports", "xss", "cookies"]
+            },
+            "description": "Modules to include in the scan"
+          }
+        }
+      },
+      "ScanResult": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique scan ID"
+          },
+          "target": {
+            "type": "string"
+          },
+          "score": {
+            "type": "number",
+            "format": "float",
+            "description": "Overall security score (0–100)"
+          },
+          "modules": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ScanWebhook": {
+        "type": "object",
+        "properties": {
+          "scan_id": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["completed", "failed"]
+          },
+          "score": {
+            "type": "number",
+            "format": "float"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "required": ["error", "message"],
+        "properties": {
+          "error": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

@@ -1,55 +1,75 @@
 ---
-title: "SchoolyAI Documentation"
-description: "Comprehensive documentation for SchoolyAI - Your AI-powered educational platform"
+title: "Scorton API"
+description: "Official documentation for the Scorton API — powering Cyberscor with advanced cybersecurity scanning capabilities."
 ---
 
 <img
   className="block dark:hidden"
   src="/images/hero-light.png"
-  alt="SchoolyAI Hero Light"
+  alt="Scorton Hero Light"
 />
 
 <img
   className="hidden dark:block"
   src="/images/hero-dark.png"
-  alt="SchoolyAI Hero Dark"
+  alt="Scorton Hero Dark"
 />
 
-## Welcome to Scorton
+## Welcome to Scorton API
 
-SchoolyAI is an innovative AI-powered educational platform designed to revolutionize the way students learn and educators teach. Our platform combines cutting-edge artificial intelligence with proven educational methodologies to create personalized learning experiences.
+The **Scorton API** is the backbone of **Cyberscor**, providing a comprehensive suite of cybersecurity scanning tools.  
+It enables the automated analysis of domains and IPs through multiple integrated modules to assess vulnerabilities, configuration issues, and security posture.
+
+---
 
 ## Getting Started
 
 <CardGroup cols={2}>
-  <Card title="Quick Start Guide" icon="rocket" href="/quickstart">
-    Get up and running with SchoolyAI in minutes
+  <Card title="Authentication" icon="lock" href="/auth/overview">
+    Learn how to authenticate with JWT and securely access the Scorton API.
   </Card>
-  <Card title="Development Setup" icon="code" href="/development">
-    Set up your development environment and start contributing
+  <Card title="First Scan" icon="search" href="/scan/overview">
+    Run your first target scan and analyze its security status in seconds.
   </Card>
 </CardGroup>
+
+---
 
 ## Key Features
 
 <CardGroup cols={2}>
-  <Card title="AI-Powered Learning" icon="brain" href="/essentials/ai-learning">
-    Personalized learning paths powered by advanced AI algorithms
+  <Card title="DNS Analysis" icon="flag" href="/scan/dns">
+    Inspect domain records to identify potential misconfigurations.
   </Card>
-  <Card title="API Integration" icon="plug" href="/api-reference/introduction">
-    Integrate SchoolyAI into your applications with our comprehensive API
+  <Card title="WHOIS Scan" icon="id-card" href="/scan/whois">
+    Retrieve domain registration and ownership details.
   </Card>
-  <Card title="Content Management" icon="folder-open" href="/essentials/content">
-    Create, manage, and organize educational content efficiently
+  <Card title="HTTP Headers Check" icon="server" href="/scan/headers">
+    Evaluate HTTP headers for missing or insecure configurations.
   </Card>
-  <Card title="Analytics & Insights" icon="chart-line" href="/essentials/analytics">
-    Track student progress and gain valuable insights into learning patterns
+  <Card title="SSL/TLS Analysis" icon="shield" href="/scan/ssl">
+    Verify certificate validity and encryption strength.
+  </Card>
+  <Card title="Open Port Scan" icon="wifi" href="/scan/ports">
+    Detect exposed services and assess their security risk.
+  </Card>
+  <Card title="XSS Detection" icon="bug" href="/scan/xss">
+    Identify cross-site scripting vulnerabilities.
+  </Card>
+  <Card title="Cookie Validation" icon="cookie" href="/scan/cookies">
+    Inspect cookies for secure, HttpOnly, and SameSite flags.
+  </Card>
+  <Card title="Security Scoring" icon="gauge" href="/scan/score">
+    Generate a global security score for each analyzed target.
   </Card>
 </CardGroup>
 
+---
+
 ## Documentation Sections
 
-- **Guides**: Step-by-step tutorials and best practices
-- **API Reference**: Complete API documentation with examples
-- **Essentials**: Core concepts and fundamental knowledge
-- **Development**: Technical setup and contribution guidelines
+- **Auth** → Authentication endpoints  
+- **Scan** → Technical scanning endpoints  
+- **Guides** → Tutorials and workflow examples  
+- **API Reference** → Full endpoint documentation with request/response schemas  
+- **Development** → Contributing and extending Scorton API modules

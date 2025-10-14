@@ -1,0 +1,82 @@
+---
+title: "Headers Scan"
+description: "Inspect HTTP response headers using the Scorton API"
+api: true
+---
+
+## Headers Scan
+
+The `headers` endpoint requests a URL and inspects the HTTP response headers for security posture (e.g., HSTS, CSP, X-Frame-Options), caching, and technology fingerprints.
+
+---
+
+## Endpoint
+
+`POST https://api.scorton.tech/scan/headers`
+
+### Authentication
+
+Authorization: `Bearer <YOUR_API_KEY>`.
+
+### Request Body
+
+```json
+{
+  "url": "https://example.com",
+  "followRedirects": true,
+  "timeoutMs": 10000
+}
+```
+
+### Response (200)
+
+```json
+{
+  "url": "https://example.com",
+  "status": 200,
+  "headers": {
+    "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+    "content-security-policy": "default-src 'self'",
+    "x-frame-options": "SAMEORIGIN",
+    "server": "nginx"
+  },
+  "signals": {
+    "hasHsts": true,
+    "hasCsp": true,
+    "hasXFrameOptions": true,
+    "cacheControl": "public, max-age=600"
+  }
+}
+```
+
+### Error (4xx)
+
+```json
+{
+  "error": {
+    "code": "FETCH_FAILED",
+    "message": "Request timed out or target refused connection"
+  }
+}
+```
+
+### cURL Example
+
+```bash
+curl -X POST 'https://api.scorton.tech/scan/headers' \
+  -H 'Authorization: Bearer YOUR_API_KEY' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "url": "https://example.com",
+    "followRedirects": true,
+    "timeoutMs": 10000
+  }'
+```
+
+### Verification
+
+- Confirm `signals.hasHsts` and `signals.hasCsp` reflect header presence.
+- Check `status` and key headers (HSTS, CSP, X-Frame-Options).
+
+
+
