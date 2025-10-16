@@ -10,7 +10,7 @@ Welcome to the SchoolyAI API documentation. Our RESTful API allows you to integr
 ## Base URL
 
 ```bash
-https://api.schoolyai.com/v1
+https://api.scorton.tech/v1
 ```
 
 ## Authentication
@@ -70,17 +70,10 @@ When an error occurs, the API returns an appropriate HTTP status code and error 
 - `429` - Rate Limit Exceeded
 - `500` - Internal Server Error
 
-## SDKs and Libraries
-
-We provide official SDKs for popular programming languages:
-
-- [JavaScript/TypeScript SDK](https://github.com/SchoolyAI/sdk-js)
-- [Python SDK](https://github.com/SchoolyAI/sdk-python)
-- [Ruby SDK](https://github.com/SchoolyAI/sdk-ruby)
 
 ## Getting Started
 
-1. [Sign up for an API key](https://dashboard.schoolyai.com/api-keys)
+1. [Sign up for an API key](https://dev.scorton.tech/api-keys)
 2. Review the [authentication guide](/api-reference/authentication)
 3. Explore the available endpoints below
 4. Check out our [code examples](/api-reference/examples)
@@ -88,32 +81,26 @@ We provide official SDKs for popular programming languages:
 ## Available Endpoints
 
 <CardGroup cols={2}>
-  <Card
-    title="Students"
-    icon="user-graduate"
-    href="/api-reference/endpoint/students"
+   <Card
+    title="Auth"
+    icon="login"
+    href="/api-reference/endpoint/auth"
   >
-    Manage student accounts and profiles
+    Get connect to your account
   </Card>
   <Card
-    title="Courses"
-    icon="book"
-    href="/api-reference/endpoint/courses"
+    title="Scan and technical tools"
+    icon="network"
+    href="/api-reference/endpoint/scan"
   >
-    Create and manage educational courses
+    Scan and help you to predict and anticipate cyberrisk.
   </Card>
   <Card
-    title="Lessons"
-    icon="chalkboard-teacher"
-    href="/api-reference/endpoint/lessons"
+    title="Users"
+    icon="users"
+    href="/api-reference/endpoint/users"
   >
-    Handle lesson content and delivery
+    Manage your developer account 
   </Card>
-  <Card
-    title="Progress"
-    icon="chart-line"
-    href="/api-reference/endpoint/progress"
-  >
-    Track student learning progress
-  </Card>
+
 </CardGroup>

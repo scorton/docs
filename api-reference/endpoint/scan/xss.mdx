@@ -1,0 +1,80 @@
+---
+title: "WHOIS Scan"
+description: "Retrieve WHOIS registration data using the Scorton API"
+api: true
+---
+
+## WHOIS Scan
+
+The `whois` endpoint retrieves domain registration and ownership metadata, registrar details, and important timestamps (creation, update, expiration).
+
+---
+
+## Endpoint
+
+`POST https://api.scorton.tech/scan/whois`
+
+### Authentication
+
+Authorization: `Bearer <YOUR_API_KEY>`.
+
+### Request Body
+
+```json
+{
+  "target": "example.com",
+  "includeRaw": false,
+  "timeoutMs": 6000
+}
+```
+
+### Response (200)
+
+```json
+{
+  "domain": "example.com",
+  "registrar": "Example Registrar, LLC",
+  "status": ["clientTransferProhibited"],
+  "contacts": {
+    "registrant": { "organization": "Example Corp" },
+    "admin": { "email": "admin@example.com" },
+    "tech": { "email": "tech@example.com" }
+  },
+  "dates": {
+    "created": "1995-08-14T00:00:00Z",
+    "updated": "2025-09-10T12:03:51Z",
+    "expires": "2030-08-13T23:59:59Z"
+  },
+  "nameServers": ["ns1.example.com", "ns2.example.com"],
+  "raw": null
+}
+```
+
+### Error (404)
+
+```json
+{
+  "error": {
+    "code": "WHOIS_NOT_FOUND",
+    "message": "No WHOIS record found for target"
+  }
+}
+```
+
+### cURL Example
+
+```bash
+curl -X POST 'https://api.scorton.tech/scan/whois' \
+  -H 'Authorization: Bearer YOUR_API_KEY' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "target": "example.com",
+    "includeRaw": false,
+    "timeoutMs": 6000
+  }'
+```
+
+### Verification
+
+- Check `expires` is in the future.
+- Confirm `registrar` and `nameServers` are populated.

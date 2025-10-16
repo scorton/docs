@@ -1,0 +1,54 @@
+---
+title: 'User Signup'
+openapi: 'POST /auth/signup'
+---
+
+# User Signup
+
+Create a new user account in the system.  
+This endpoint registers a new user by email and password.  
+It automatically hashes the password before saving it in the database and assigns a default role (`user`).
+
+## Request Body
+
+<ParamField body="email" type="string" required={true}>
+  The user's email address (must be unique and valid)
+</ParamField>
+
+<ParamField body="password" type="string" required={true}>
+  The user's chosen password (minimum 8 characters recommended)
+</ParamField>
+
+## Example Request
+
+```bash
+curl -X POST "https://api.scorton.tech/auth/signup" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "user@example.com",
+    "password": "StrongPassword123!"
+  }'
+```
+
+## Example Response
+
+```json
+{
+  "id": "123456789",
+  "email": "user@example.com",
+  "role": "user"
+}
+```
+
+## Success Response
+
+| Status | Description |
+|---------|-------------|
+| **201** | User successfully registered |
+
+## Error Responses
+
+| Status | Description | Example |
+|---------|--------------|----------|
+| **409** | Email already registered | ```{ "detail": "Conflict: Email already registered." } ``` |
+| **500** | Server error | ```{ "detail": "Internal Server Error." } ``` |

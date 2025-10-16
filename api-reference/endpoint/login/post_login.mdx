@@ -1,0 +1,51 @@
+---
+title: 'User Login'
+openapi: 'POST /auth/login'
+---
+
+Authenticate a user and obtain an access token.  
+This endpoint verifies the user's email and password, checks the user role (`user`), and returns a JWT token upon successful authentication.
+
+## Request Body
+
+<ParamField body="email" type="string" required={true}>
+  The user's email address
+</ParamField>
+
+<ParamField body="password" type="string" required={true}>
+  The user's password
+</ParamField>
+
+## Example Request
+
+```bash
+curl -X POST "https://api.scorton.tech/auth/login" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "user@example.com",
+    "password": "StrongPassword123!"
+  }'
+```
+
+## Example Response
+
+```json
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "token_type": "TokenType"
+}
+```
+
+## Success Response
+
+| Status | Description |
+|--------|-------------|
+| **200 OK** | User authenticated successfully; returns `access_token`, `role`, and `user_id` |
+
+## Error Responses
+
+| Status | Description | Example |
+|--------|-------------|---------|
+| **401 Unauthorized** | Invalid credentials or role mismatch | ```json { "detail": "Unauthorized: Invalid credentials." } ``` |
+| **404 Not Found** | User email not found | ```json { "detail": "Not Found: User not found." } ``` |
+| **500 Internal Server Error** | Unexpected server error | ```json { "detail": "An unexpected error occurred" } ```
