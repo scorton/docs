@@ -1,24 +1,22 @@
 ---
-title: 'Cookies Scan'
-openapi: 'POST /scan/cookies'
+title: "Cookies Scan"
+openapi: "POST /scan/cookies"
 ---
 
-# Cookies Scan
-
-Analyze HTTP response cookies for security attributes and best practices using the Scorton API.  
+Analyze HTTP response cookies for security attributes and best practices using the Scorton API.\
 This endpoint inspects cookies for `Secure`, `HttpOnly`, `SameSite`, and `max-age` attributes.
 
 ## Request Body
 
-<ParamField body="url" type="string" required={true}>
+<ParamField body="url" type="string" required="true">
   The URL to scan for cookies
 </ParamField>
 
-<ParamField body="followRedirects" type="boolean" required={false}>
+<ParamField body="followRedirects" type="boolean" required="false">
   Whether to follow HTTP redirects (default: false)
 </ParamField>
 
-<ParamField body="timeoutMs" type="integer" required={false}>
+<ParamField body="timeoutMs" type="integer" required="false">
   Request timeout in milliseconds (default: 10000)
 </ParamField>
 
@@ -65,19 +63,19 @@ curl -X POST 'https://api.scorton.tech/scan/cookies' \
 
 ## Success Response
 
-| Status | Description |
-|--------|-------------|
+| Status     | Description                                                                          |
+| ---------- | ------------------------------------------------------------------------------------ |
 | **200 OK** | Cookies scanned successfully, response includes `cookies` array and `signals` object |
 
 ## Error Responses
 
-| Status | Description | Example |
-|--------|-------------|---------|
-| **400 Bad Request** | Invalid request parameters | ```json { "error": { "code": "FETCH_FAILED", "message": "Could not fetch or parse Set-Cookie headers" } } ``` |
-| **401 Unauthorized** | Missing or invalid API key | ```json { "error": { "code": "UNAUTHORIZED", "message": "Invalid API key" } } ``` |
-| **500 Internal Server Error** | Unexpected server error | ```json { "error": { "code": "SERVER_ERROR", "message": "An unexpected error occurred" } } ```
+| Status                        | Description                | Example                                                                                                   |
+| ----------------------------- | -------------------------- | --------------------------------------------------------------------------------------------------------- |
+| **400 Bad Request**           | Invalid request parameters | `json { "error": { "code": "FETCH_FAILED", "message": "Could not fetch or parse Set-Cookie headers" } } ` |
+| **401 Unauthorized**          | Missing or invalid API key | `json { "error": { "code": "UNAUTHORIZED", "message": "Invalid API key" } } `                             |
+| **500 Internal Server Error** | Unexpected server error    | `json { "error": { "code": "SERVER_ERROR", "message": "An unexpected error occurred" } } `                |
 
 ## Verification
 
-- Check that `signals.insecureCookies` is empty for secure applications.  
+- Check that `signals.insecureCookies` is empty for secure applications.
 - Ensure cookies have `secure`, `httpOnly`, and correct `sameSite` attributes.
