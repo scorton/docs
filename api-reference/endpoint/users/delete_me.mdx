@@ -1,0 +1,42 @@
+---
+title: 'Delete User'
+openapi: 'DELETE /users/me'
+---
+
+Delete the currently authenticated user's account permanently.  
+Requires a valid authentication token in the `AUTH` header.
+
+## Headers
+
+<ParamField header="AUTH" type="string" required={true}>
+  Authentication token (JWT) obtained from the `/auth/login` endpoint
+</ParamField>
+
+## Example Request
+
+```bash
+curl -X DELETE "https://api.scorton.tech/users/me" \
+  -H "AUTH: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+```
+
+## Example Response
+
+```json
+{
+  "detail": "Ok: User successfully deleted."
+}
+```
+
+## Success Response
+
+| Status | Description |
+|--------|--------------|
+| **200** | User deleted successfully |
+
+## Error Responses
+
+| Status | Description | Example |
+|--------|-------------|---------|
+| **401** | Missing or invalid token | ```{ "detail": "Unauthorized: Invalid or expired token." } ``` |
+| **403** | Account not validated | ```{ "detail": "Forbidden: Account is not validated yet." } ``` |
+| **404** | User not found | ```{ "detail": "Not Found: User does not exist." } ``` |

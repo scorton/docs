@@ -1,0 +1,59 @@
+---
+title: 'Edit User'
+openapi: 'PUT /users/me'
+---
+
+Update user information such as email or password.  
+Requires a valid authentication token in the `AUTH` header.
+
+## Headers
+
+<ParamField header="AUTH" type="string" required={true}>
+  Authentication token (JWT) obtained from the `/auth/login` endpoint
+</ParamField>
+
+## Request Body
+
+<ParamField body="email" type="string" required={true}>
+  The new email address of the user
+</ParamField>
+
+<ParamField body="password" type="string" required={true}>
+  The new password for the account
+</ParamField>
+
+## Example Request
+
+```bash
+curl -X PUT "https://api.example.com/users/me" \
+  -H "Content-Type: application/json" \
+  -H "AUTH: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." \
+  -d '{
+    "email": "newmail@example.com",
+    "password": "NewPass456!"
+  }'
+```
+
+## Example Response
+
+```json
+{
+  "id": "123456789",
+  "email": "newmail@example.com",
+  "role": "user"
+}
+```
+
+## Success Response
+
+| Status | Description |
+|--------|--------------|
+| **200** | User updated successfully |
+
+## Error Responses
+
+| Status | Description | Example |
+|--------|-------------|---------|
+| **400** | Invalid input | ```{ "detail": "Invalid input format." } ``` |
+| **401** | Invalid or missing token | ```{ "detail": "Unauthorized: Invalid or expired token." } ``` |
+| **403** | Account not validated | ```{ "detail": "Forbidden: Account is not validated yet." } ``` |

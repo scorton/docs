@@ -1,0 +1,72 @@
+---
+title: 'Run score'
+openapi: 'POST /scans/score'
+---
+
+Run one or multiple scan tools on a given target (e.g., `dns`, `ports`, `ssl`, `headers`, `whois`) and calculates a score based on the result.  
+Requires a valid authentication token in the `AUTH` header.
+
+## Headers
+
+<ParamField header="AUTH" type="string" required={true}>
+  Authentication token (JWT) obtained from the `/auth/login` endpoint
+</ParamField>
+
+## Request Body
+
+<ParamField body="target" type="string" required={true}>
+  The domain to scan with http or https prefix
+</ParamField>
+
+<ParamField body="scans" type="array" required={true}>
+  List of scan types to perform.  
+  Available values: `dns`, `ports`
+  
+  /!\ These tools are still work in progress, new tools will be added soon.
+</ParamField>
+
+## Example Request
+
+```bash
+curl -X POST "https://api.scorton.tech/scans/" \
+  -H "AUTH: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." \
+  -H "Content-Type: application/json" \
+  -d '{
+    "target": "example.com",
+    "scans": ["dns", "ports", "ssl"]
+  }'
+
+## Example Response
+
+```json
+{
+  "target": "https://scorton.tech",
+  "performed_scans": ["type1", "type2"],
+  "global_score": 100,
+  "results": {
+    "type1": {
+        "score": 100,
+        "data": "example data"
+    },
+    "type2": {
+        "score": 100,
+        "data": "example data"
+    },
+  }
+}
+```
+
+## Success Response
+
+| Status | Description |
+|--------|--------------|
+| **200** | Returns the scan results |
+
+## Error Responses
+
+| Status | Description | Example |
+|--------|-------------|---------|
+| **400** | Missing or invalid argument | ```{ "detail": "Bad request: Missing target." }, { "detail": "Bad Request: No scan types specified." }``` |
+| **401** | Missing or invalid token | ```{ "detail": "Unauthorized: Invalid or expired token." } ``` |
+| **403** | Account not validated yet | ```{ "detail": "Forbidden: Account is not validated yet." } ``` |
+| **404** | User not found | ```{ "detail": "Not Found: User does not exist." } ``` |
