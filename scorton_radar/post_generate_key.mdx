@@ -1,0 +1,61 @@
+---
+title: 'Generate API Key'
+openapi: 'POST /generate-key'
+---
+
+Generate a new API key for a registered user.  
+Requires a valid JWT token and a user email address.
+
+## Request Body
+
+<ParamField body="email" type="string" required={true}>
+  The user's email address registered on Scorton (e.g., `user@scorton.tech`)
+</ParamField>
+
+<ParamField body="level" type="string" required={false}>
+  The access level for the generated key.  
+  Default: `free`
+</ParamField>
+
+<ParamField body="jwt_token" type="string" required={true}>
+  The JWT token used for authentication.
+</ParamField>
+
+## Example Request
+
+```bash
+curl -X 'POST' \
+  'https://data-extraction-971s.onrender.com/generate-key' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/x-www-form-urlencoded' \
+  -d 'email=user@example.com&level=free&jwt_token=token_example'
+```
+
+## Example Response
+
+```json
+{
+  "status": "success",
+  "message": "API key generated",
+  "data": {
+    "client_id": 0,
+    "id": 0,
+    "key": "key_example",
+    "level": "free",
+    "expire_at": "0001-01-01T00:00:00.000000"
+  }
+}
+```
+
+## Success Response
+
+| Status | Description |
+|--------|--------------|
+| **200** | Returns the generated API key and metadata |
+
+## Error Responses
+
+| Status | Description | Example |
+|--------|--------------|---------|
+| **400** | Missing required parameters | ```json { "detail": "Missing email or jwt_token." } ``` |
+| **401** | Invalid or expired JWT token | ```json { "detail": "Unauthorized: Invalid or expired token." } ``` |
