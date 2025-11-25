@@ -1,9 +1,9 @@
 ---
-title: 'Get User'
-openapi: 'GET /users/user'
+title: 'Delete User'
+openapi: 'DELETE /users/me'
 ---
 
-Retrieve the user's profile.
+Delete the currently authenticated user's account permanently.  
 Requires a valid authentication token in the `AUTH` header.
 
 ## Headers
@@ -15,7 +15,7 @@ Requires a valid authentication token in the `AUTH` header.
 ## Example Request
 
 ```bash
-curl -X GET "https://api.scorton.tech/users/me" \
+curl -X DELETE "https://api.scorton.tech/users/me" \
   -H "AUTH: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 ```
 
@@ -23,9 +23,7 @@ curl -X GET "https://api.scorton.tech/users/me" \
 
 ```json
 {
-  "id": "123456789",
-  "email": "user@example.com",
-  "role": "user"
+  "detail": "Ok: User successfully deleted."
 }
 ```
 
@@ -33,12 +31,12 @@ curl -X GET "https://api.scorton.tech/users/me" \
 
 | Status | Description |
 |--------|--------------|
-| **200** | Returns the authenticated user's details |
+| **200** | User deleted successfully |
 
 ## Error Responses
 
 | Status | Description | Example |
 |--------|-------------|---------|
 | **401** | Missing or invalid token | ```{ "detail": "Unauthorized: Invalid or expired token." } ``` |
-| **403** | Account not validated yet | ```{ "detail": "Forbidden: Account is not validated yet." } ``` |
+| **403** | Account not validated | ```{ "detail": "Forbidden: Account is not validated yet." } ``` |
 | **404** | User not found | ```{ "detail": "Not Found: User does not exist." } ``` |

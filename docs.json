@@ -1,5 +1,4 @@
 {
-  "$schema": "https://docs.scorton.tech/docs.json",
   "theme": "linden",
   "name": "Scorton",
   "colors": {
@@ -11,39 +10,62 @@
   "navigation": {
     "tabs": [
       {
-        "tab": "Guides",
+        "tab": "API ScortonJS",
         "groups": [
           {
-            "group": "Get Started",
+            "group": "Documentation",
             "pages": [
-              "index",
-              "quickstart",
-              "development"
+              "introduction"
             ]
           },
           {
-            "group": "Essentials",
+            "group": "API Reference",
             "pages": [
-              "essentials/code",
-              "essentials/settings",
-              "essentials/navigation"
+              {
+                "group": "Authentication",
+                "pages": [
+                  "api-reference/endpoint/auth/post_login"
+                ]
+              },
+              {
+                "group": "Users",
+                "pages": [
+                  "api-reference/endpoint/users/get_me",
+                  "api-reference/endpoint/users/put_me",
+                  "api-reference/endpoint/users/delete_me"
+                ]
+              },
+              {
+                "group": "Scans",
+                "pages": [
+                  "api-reference/endpoint/scans/post_scan",
+                  "api-reference/endpoint/scans/post_score"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Implementation",
+            "pages": [
+              "https://dev.scorton.tech/developer"
             ]
           }
         ]
       },
       {
-        "tab": "API Reference",
+        "tab": "API Scorton Radar",
         "groups": [
           {
-            "group": "API Documentation",
+            "group": "Documentation",
             "pages": [
-              "api-reference/introduction"
+              "scorton_radar/metadata"
             ]
           },
           {
-            "group": "Endpoint Examples",
+            "group": "API Reference",
             "pages": [
-              "api-reference/endpoint/create"
+              "scorton_radar/post_generate_key",
+              "scorton_radar/get_verify_key"
             ]
           }
         ]
@@ -78,7 +100,7 @@
     "primary": {
       "type": "button",
       "label": "Get Started",
-      "href": "https://scorton.tech/quickstart"
+      "href": "https://beta.scorton.tech/"
     }
   },
   "footer": {

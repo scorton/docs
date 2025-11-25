@@ -1,5 +1,5 @@
 ---
-title: "Scorton API"
+title: "Introduction"
 description: "Official documentation for the Scorton API — powering Cyberscor with advanced cybersecurity scanning capabilities."
 ---
 
@@ -25,51 +25,50 @@ It enables the automated analysis of domains and IPs through multiple integrated
 ## Getting Started
 
 <CardGroup cols={2}>
-  <Card title="Authentication" icon="lock" href="/auth/overview">
-    Learn how to authenticate with JWT and securely access the Scorton API.
+  <Card title="Authentication" icon="lock" href="/api-reference/endpoint/auth/post_login">
+    Learn how to authenticate and securely access the Scorton API.
   </Card>
-  <Card title="First Scan" icon="search" href="/scan/overview">
+  <Card title="First Scan" icon="search" href="/api-reference/endpoint/scans/post_scan">
     Run your first target scan and analyze its security status in seconds.
   </Card>
 </CardGroup>
 
 ---
 
-## Key Features
+## Available scan features
+
+These features are now available from the scanning tool of the API.
 
 <CardGroup cols={2}>
-  <Card title="DNS Analysis" icon="flag" href="/scan/dns">
+  <Card title="DNS Analysis" icon="flag">
     Inspect domain records to identify potential misconfigurations.
   </Card>
-  <Card title="WHOIS Scan" icon="id-card" href="/scan/whois">
-    Retrieve domain registration and ownership details.
-  </Card>
-  <Card title="HTTP Headers Check" icon="server" href="/scan/headers">
-    Evaluate HTTP headers for missing or insecure configurations.
-  </Card>
-  <Card title="SSL/TLS Analysis" icon="shield" href="/scan/ssl">
-    Verify certificate validity and encryption strength.
-  </Card>
-  <Card title="Open Port Scan" icon="wifi" href="/scan/ports">
+  <Card title="Open Port Scan" icon="wifi">
     Detect exposed services and assess their security risk.
-  </Card>
-  <Card title="XSS Detection" icon="bug" href="/scan/xss">
-    Identify cross-site scripting vulnerabilities.
-  </Card>
-  <Card title="Cookie Validation" icon="cookie" href="/scan/cookies">
-    Inspect cookies for secure, HttpOnly, and SameSite flags.
-  </Card>
-  <Card title="Security Scoring" icon="gauge" href="/scan/score">
-    Generate a global security score for each analyzed target.
   </Card>
 </CardGroup>
 
----
+## Work in progress scan features
 
-## Documentation Sections
+These features will be added soon to the list of scan tools.
 
-- **Auth** → Authentication endpoints  
-- **Scan** → Technical scanning endpoints  
-- **Guides** → Tutorials and workflow examples  
-- **API Reference** → Full endpoint documentation with request/response schemas  
-- **Development** → Contributing and extending Scorton API modules
+<CardGroup cols={2}>
+  <Card title="WHOIS Scan" icon="id-card">
+    Retrieve domain registration and ownership details.
+  </Card>
+  <Card title="HTTP Headers Check" icon="server">
+    Evaluate HTTP headers for missing or insecure configurations.
+  </Card>
+  <Card title="SSL/TLS Analysis" icon="shield">
+    Verify certificate validity and encryption strength.
+  </Card>
+  <Card title="XSS Detection" icon="bug">
+    Identify cross-site scripting vulnerabilities.
+  </Card>
+  <Card title="Cookie Validation" icon="cookie">
+    Inspect cookies for secure, HttpOnly, and SameSite flags.
+  </Card>
+  <Card title="Security Scoring" icon="gauge">
+    Generate a global security score for each analyzed target.
+  </Card>
+</CardGroup>

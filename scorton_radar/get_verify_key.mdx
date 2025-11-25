@@ -1,0 +1,49 @@
+---
+title: 'Verify API Key'
+openapi: 'GET /verify-key'
+---
+
+Verify an API key for a registered user.  
+Requires a generated API key to verify.
+
+## Header
+
+<ParamField header="x-api-key" type="string" required={true}>
+  Generated API key obtained from the `/generated-key` endpoint
+</ParamField>
+
+## Example Request
+
+```bash
+curl -X 'GET' \
+  'https://data-extraction-971s.onrender.com/verify-key' \
+  -H 'accept: application/json' \
+  -H 'x-api-key: example_key'
+```
+
+## Example Response
+
+```json
+{
+  "status": "success",
+  "message": "API Key valide",
+  "data": {
+    "api_key": "example_key",
+    "api_key_id": 0,
+    "client_id": 0,
+    "level": "free"
+  }
+}
+```
+
+## Success Response
+
+| Status | Description |
+|--------|--------------|
+| **200** | Returns  |
+
+## Error Responses
+
+| Status | Description | Example |
+|--------|--------------|---------|
+| **401** | Invalid API key | ```json {  "detail": "Clé API invalide"  } ``` |
