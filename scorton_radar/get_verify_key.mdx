@@ -1,14 +1,14 @@
 ---
-title: 'Verify API Key'
-openapi: 'GET /verify-key'
+title: "Verify API Key"
+openapi: "GET /verify-key"
 ---
 
-Verify an API key for a registered user.  
+Verify an API key for a registered user.\
 Requires a generated API key to verify.
 
 ## Header
 
-<ParamField header="x-api-key" type="string" required={true}>
+<ParamField header="x-api-key" type="string" required="true">
   Generated API key obtained from the `/generated-key` endpoint
 </ParamField>
 
@@ -16,7 +16,7 @@ Requires a generated API key to verify.
 
 ```bash
 curl -X 'GET' \
-  'https://data-extraction-971s.onrender.com/verify-key' \
+  'https://radar.scorton.tech/verify-key' \
   -H 'accept: application/json' \
   -H 'x-api-key: example_key'
 ```
@@ -38,12 +38,12 @@ curl -X 'GET' \
 
 ## Success Response
 
-| Status | Description |
-|--------|--------------|
-| **200** | Returns  |
+| Status  | Description |
+| ------- | ----------- |
+| **200** | Returns     |
 
 ## Error Responses
 
-| Status | Description | Example |
-|--------|--------------|---------|
-| **401** | Invalid API key | ```json {  "detail": "Clé API invalide"  } ``` |
+| Status  | Description     | Example                                    |
+| ------- | --------------- | ------------------------------------------ |
+| **401** | Invalid API key | `json {  "detail": "Clé API invalide"  } ` |

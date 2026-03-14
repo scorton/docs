@@ -4,20 +4,19 @@ description: "Official documentation for the Scorton API — powering Cyberscor 
 ---
 
 <img
-  className="block dark:hidden"
-  src="/images/hero-light.png"
-  alt="Scorton Hero Light"
-/>
-
-<img
   className="hidden dark:block"
-  src="/images/hero-dark.png"
+  src="/images/intro-scorton-docs.png"
   alt="Scorton Hero Dark"
+/>
+<img
+  className="dark:hidden"
+  src="/images/intro-scorton-docs.png"
+  alt="Scorton Hero Light"
 />
 
 ## Welcome to Scorton API
 
-The **Scorton API** is the backbone of **Cyberscor**, providing a comprehensive suite of cybersecurity scanning tools.  
+The **Scorton API** is the backbone of **Cyberscor**, providing a comprehensive suite of cybersecurity scanning tools.\
 It enables the automated analysis of domains and IPs through multiple integrated modules to assess vulnerabilities, configuration issues, and security posture.
 
 ---
@@ -25,10 +24,10 @@ It enables the automated analysis of domains and IPs through multiple integrated
 ## Getting Started
 
 <CardGroup cols={2}>
-  <Card title="Authentication" icon="lock" href="/api-reference/endpoint/auth/post_login">
+  <Card icon="lock" href="/api-reference/endpoint/auth/post_login" title="Authentication">
     Learn how to authenticate and securely access the Scorton API.
   </Card>
-  <Card title="First Scan" icon="search" href="/api-reference/endpoint/scans/post_scan">
+  <Card icon="search" href="/api-reference/endpoint/scans/post_scan" title="First Scan">
     Run your first target scan and analyze its security status in seconds.
   </Card>
 </CardGroup>
@@ -40,10 +39,10 @@ It enables the automated analysis of domains and IPs through multiple integrated
 These features are now available from the scanning tool of the API.
 
 <CardGroup cols={2}>
-  <Card title="DNS Analysis" icon="flag">
+  <Card icon="flag" title="DNS Analysis">
     Inspect domain records to identify potential misconfigurations.
   </Card>
-  <Card title="Open Port Scan" icon="wifi">
+  <Card icon="wifi" title="Open Port Scan">
     Detect exposed services and assess their security risk.
   </Card>
 </CardGroup>
@@ -53,22 +52,22 @@ These features are now available from the scanning tool of the API.
 These features will be added soon to the list of scan tools.
 
 <CardGroup cols={2}>
-  <Card title="WHOIS Scan" icon="id-card">
+  <Card icon="id-card" title="WHOIS Scan">
     Retrieve domain registration and ownership details.
   </Card>
-  <Card title="HTTP Headers Check" icon="server">
+  <Card icon="server" title="HTTP Headers Check">
     Evaluate HTTP headers for missing or insecure configurations.
   </Card>
-  <Card title="SSL/TLS Analysis" icon="shield">
+  <Card icon="shield" title="SSL/TLS Analysis">
     Verify certificate validity and encryption strength.
   </Card>
-  <Card title="XSS Detection" icon="bug">
+  <Card icon="bug" title="XSS Detection">
     Identify cross-site scripting vulnerabilities.
   </Card>
-  <Card title="Cookie Validation" icon="cookie">
+  <Card icon="cookie" title="Cookie Validation">
     Inspect cookies for secure, HttpOnly, and SameSite flags.
   </Card>
-  <Card title="Security Scoring" icon="gauge">
+  <Card icon="gauge" title="Security Scoring">
     Generate a global security score for each analyzed target.
   </Card>
 </CardGroup>
