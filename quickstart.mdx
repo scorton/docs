@@ -1,91 +1,92 @@
 ---
 title: "Quickstart"
-description: "Get started with Scorton in under 5 minutes"
+description: "From zero to a CyberScore on developers.scorton.dev and api.scorton.dev."
 ---
 
-## Welcome to Scorton
+# Quickstart
 
-Scorton is an AI-powered educational platform that helps create personalized learning experiences. This quickstart guide will help you get up and running quickly.
+## 1. Open the portal
 
-## Getting Started
+Sign in at [https://developers.scorton.dev/auth](https://developers.scorton.dev/auth). That host is the Developer Portal. API calls below use the same origin.
 
-### 1. Sign Up for an Account
+## 2. Create an account
 
-<AccordionGroup>
-  <Accordion title="Create your account" icon="user-plus">
-    Visit [scorton.tech](https://scorton.tech) and click "Sign Up" to create your account. You can sign up as an educator, student, or administrator.
-  </Accordion>
-  <Accordion title="Get your API key" icon="key">
-    After signing up, navigate to your dashboard and go to the API Keys section. Generate a new API key to start integrating with our platform.
-  </Accordion>
-</AccordionGroup>
+Signup creates:
 
-### 2. Set Up Your First Course
+1. A portal account
+2. A **Cyberscor** user on `api.scorton.dev` (`POST /v1/cyberscor/auth/signup`)
 
-<AccordionGroup>
-  <Accordion title="Create a course" icon="book">
-    Use our course builder to create your first educational course. You can add lessons, quizzes, and interactive content.
-  </Accordion>
-  <Accordion title="Invite students" icon="users">
-    Share your course with students by sending them invitation links or adding them directly through the dashboard.
-  </Accordion>
-</AccordionGroup>
+The portal keeps both sessions. Scans send the Cyberscor JWT as `x-cyberscor-token`.
 
-## API Integration
+## 3. Mint a platform token
 
-### Quick API Test
+Go to **API Tokens** → create a key. You get a value like `scrt_…`.
 
-Test your API key with a simple request:
+- Stored by the portal
+- Verified with `GET /api/verify-key` + header `x-api-key` (or Bearer `scrt_`)
+- Unlocks `/api/scan`, raw MCP `POST /api/mcp`, and `/api/gateway/*` (TrustScore + Cyberscor)
+- Stay signed in so your Cyberscor JWT is sent as `x-cyberscor-token` for upstream security scores
 
-```bash
-curl -X GET "https://api.schoolyai.com/v1/courses" \
-  -H "Authorization: Bearer YOUR_API_KEY"
+<Note>
+  Platform tokens are **not** Radar keys from `radar.scorton.tech`. The portal owns key issuance.
+</Note>
+
+## 4. Score a domain
+
+On **Scan URL**:
+
+1. Paste `scrt_…` and click **Verify**
+2. Enter a host (e.g. `example.com`)
+3. Run scan
+
+The portal calls `POST /api/scan`, which:
+
+1. Validates the platform key
+2. Tries upstream `POST /v1/cyberscor/score` with your Cyberscor JWT (if present)
+3. Falls back to a portal DNS + security-headers score if containers/auth fail
+
+## 5. Connect MCP (Cursor / Claude)
+
+With `SCORTON_API_KEY` set on the portal server, point MCP at the **raw** portal proxy:
+
+```json
+{
+  "mcpServers": {
+    "scorton": {
+      "url": "https://developers.scorton.dev/api/mcp",
+      "headers": {
+        "Authorization": "Bearer scrt_YOUR_PLATFORM_TOKEN"
+      }
+    }
+  }
+}
 ```
 
-### SDK Installation
+```bash
+curl -X POST https://developers.scorton.dev/api/mcp \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer scrt_YOUR_PLATFORM_TOKEN" \
+  -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+```
 
-Install our official SDK for your preferred language:
+Platform tokens do **not** authenticate directly against `mcp.scorton.dev` — the portal verifies `scrt_` and swaps in the service key.
 
-<CardGroup cols={2}>
-  <Card title="JavaScript/TypeScript" icon="js" href="https://github.com/SchoolyAI/sdk-js">
-    ```bash
-    npm install @schoolyai/sdk
-    ```
-  </Card>
-  <Card title="Python" icon="python" href="https://github.com/SchoolyAI/sdk-python">
-    ```bash
-    pip install schoolyai
-    ```
-  </Card>
-</CardGroup>
+## 6. Use ScortonJS
 
-## Key Features to Explore
+```bash
+pip install scortonjs
+scorton score example.com
+```
 
-<CardGroup cols={2}>
-  <Card title="AI-Powered Learning" icon="brain" href="/essentials/ai-learning">
-    Discover how our AI creates personalized learning paths for each student.
-  </Card>
-  <Card title="Content Management" icon="folder-open" href="/essentials/content">
-    Learn how to create and organize educational content effectively.
-  </Card>
-  <Card title="Progress Tracking" icon="chart-line" href="/essentials/analytics">
-    Monitor student progress and performance with detailed analytics.
-  </Card>
-  <Card title="API Reference" icon="code" href="/api-reference/introduction">
-    Explore our comprehensive API documentation for advanced integrations.
-  </Card>
-</CardGroup>
+Or see [ScortonJS](/sdks/scortonjs) for TypeScript / CLI examples pointed at `api.scorton.dev`.
 
-## Next Steps
+## Local development
 
-1. **Complete the Tutorial**: Follow our step-by-step tutorial to create your first course
-2. **Explore the Dashboard**: Familiarize yourself with the SchoolyAI dashboard features
-3. **Read the Documentation**: Dive deeper into our comprehensive documentation
-4. **Join the Community**: Connect with other educators in our community forum
+The hosted portal is [developers.scorton.dev](https://developers.scorton.dev). To run this repo yourself:
 
-## Need Help?
+```bash
+npm run dev        # http://localhost:3100
+npm run docs:dev   # http://localhost:3000
+```
 
-- **Documentation**: Browse our comprehensive guides and API reference
-- **Support**: Contact our support team at [support@schoolyai.com](mailto:support@schoolyai.com)
-- **Community**: Join our community forum for discussions and tips
-- **GitHub**: Check out our open-source components and examples
+Copy `.env.example` to `.env.local`. Set `NEXT_PUBLIC_APP_URL=http://localhost:3100` so Stripe return URLs stay on the dev server.
