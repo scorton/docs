@@ -1,0 +1,86 @@
+---
+title: Authentication
+description: Portal session, platform keys, and Cyberscor JWT on api.scorton.dev.
+---
+
+# Authentication
+
+The Dev Portal uses **three** credentials. Login creates the session + Cyberscor JWT; **API Tokens** mints the platform key.
+
+| Credential | Source | Unlocks |
+| --- | --- | --- |
+| Portal session | `/auth` login | Mint/list keys (`/api/generate-key`, `/api/list-keys`) |
+| Platform key `scrt_…` | API Tokens generate | `/api/scan`, `/api/mcp`, `/api/gateway/*`, `/api/verify-key` |
+| Cyberscor JWT | same `/auth` login | Upstream Cyberscor security score via `x-cyberscor-token` |
+
+Platform key alone is enough for MCP, TrustScore, and portal security-score fallback. Cyberscor JWT upgrades scoring to upstream when containers are healthy.
+
+`Authorization: Bearer scrt_…` is treated as a **platform key**. Cyberscor JWTs must use `x-cyberscor-token` (or Bearer that is **not** `scrt_`).
+
+## Cyberscor signup
+
+```bash
+curl -X POST "https://api.scorton.dev/v1/cyberscor/auth/signup" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "dev@example.com",
+    "password": "StrongPassword123!"
+  }'
+```
+
+**200 response**
+
+```json
+{
+  "id": "…",
+  "email": "dev@example.com",
+  "role": "user"
+}
+```
+
+## Cyberscor login
+
+```bash
+curl -X POST "https://api.scorton.dev/v1/cyberscor/auth/login" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "dev@example.com",
+    "password": "StrongPassword123!"
+  }'
+```
+
+**200 response**
+
+```json
+{
+  "access_token": "eyJ…",
+  "token_type": "bearer",
+  "user_id": "…",
+  "role": "user"
+}
+```
+
+Use `access_token` as:
+
+- `x-cyberscor-token: <jwt>` on portal scan/gateway routes
+- and/or upstream `Authorization: Bearer <jwt>` / `AUTH: <jwt>` against `api.scorton.dev`
+
+The portal keeps this JWT and the portal session.
+
+## Portal session
+
+Portal-only routes require the session from [https://developers.scorton.dev/auth](https://developers.scorton.dev/auth):
+
+```http
+Authorization: Bearer <portal_session>
+```
+
+Examples: `POST /api/generate-key`, `GET /api/list-keys`.
+
+## Errors
+
+| Status | Meaning |
+| --- | --- |
+| 401 | Invalid credentials or expired JWT |
+| 403 | Account not validated (upstream Cyberscor) |
+| 404 | User not found |

@@ -1,0 +1,94 @@
+---
+title: MCP
+description: Scorton MCP server on mcp.scorton.dev and portal proxy.
+---
+
+# MCP
+
+Base: `https://mcp.scorton.dev`
+
+| Path | Purpose |
+| --- | --- |
+| `GET /health` | Liveness |
+| `POST /mcp` | MCP JSON-RPC (tools, etc.) |
+
+## Health
+
+```bash
+curl "https://mcp.scorton.dev/health"
+```
+
+```json
+{
+  "status": "ok",
+  "service": "scorton-mcp"
+}
+```
+
+The portal exposes the same check via `GET /api/mcp/health` (also returns API catalog).
+
+## Via portal raw MCP (platform token) — Cursor / Claude
+
+Use a platform `scrt_` token from **API Tokens**. The portal verifies it and returns upstream JSON-RPC **as-is**.
+
+```json
+{
+  "mcpServers": {
+    "scorton": {
+      "url": "https://developers.scorton.dev/api/mcp",
+      "headers": {
+        "Authorization": "Bearer scrt_…"
+      }
+    }
+  }
+}
+```
+
+```bash
+curl -X POST "https://developers.scorton.dev/api/mcp" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer scrt_…" \
+  -d '{
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "tools/list"
+  }'
+```
+
+Also accepts `x-api-key: scrt_…`.
+
+Flow:
+
+1. Portal verifies `scrt_`  
+2. Portal calls `mcp.scorton.dev/mcp` with `SCORTON_API_KEY`  
+3. Returns the upstream body unchanged (no portal envelope)
+
+## Via portal gateway (wrapped)
+
+For scripts that want `{ status, via, owner, data }`:
+
+```bash
+curl -X POST "https://developers.scorton.dev/api/gateway/mcp" \
+  -H "Content-Type: application/json" \
+  -H "x-api-key: scrt_…" \
+  -d '{
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "tools/list"
+  }'
+```
+
+## Direct MCP (service key)
+
+Service / upstream keys authenticate against `mcp.scorton.dev` directly. Platform `scrt_` tokens alone do **not** — use the portal proxies above.
+
+## Tools (representative)
+
+Documented in the portal Integrations UI; common tools include:
+
+- `score_human_risk`
+- `score_ai_risk`
+- `score_workflow_risk`
+- `generate_audit_snapshot`
+- `run_ai_eval_summary`
+- `health_check`

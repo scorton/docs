@@ -1,0 +1,42 @@
+---
+title: Dev portal
+description: Developer docs for the Scorton portal at developers.scorton.dev, api.scorton.dev, and mcp.scorton.dev.
+---
+
+# Scorton Dev Docs
+
+These docs describe the **actual contracts** used by the [Developer Portal](https://developers.scorton.dev) — not the older `api.scorton.tech` / `radar.scorton.tech` paths from the public Mintlify site.
+
+## Stack
+
+| Surface | Host / path | Role |
+| --- | --- | --- |
+| Dev Portal | [developers.scorton.dev](https://developers.scorton.dev) | Auth UI, `scrt_` tokens, scan UI, MCP gateway |
+| API | `https://api.scorton.dev` | Cyberscor + TrustScore REST |
+| MCP | `https://mcp.scorton.dev` | Agent tools (risk scoring, audits) |
+| ScortonJS | [js.scorton.dev](https://js.scorton.dev) | OSS CLI / SDK marketing + install |
+
+## What changed vs docs.scorton.tech
+
+- **Hosts:** `.dev` (portal stack), not `.tech`
+- **Auth:** Portal session + Cyberscor JWT (`/v1/cyberscor/auth/*`)
+- **Keys:** Platform tokens issued by the portal (`scrt_…`), not Radar `radar.scorton.tech`
+- **Score:** `POST /v1/cyberscor/score` (and portal gateway fallback)
+- **MCP / TrustScore / portal gateway:** documented here; missing from the public docs site
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Quickstart" icon="rocket" href="/quickstart">
+    Sign in, mint a token, score a domain.
+  </Card>
+  <Card title="Architecture" icon="diagram-project" href="/architecture">
+    How portal, API, and MCP fit together.
+  </Card>
+  <Card title="Cyberscor API" icon="shield" href="/api-reference/cyberscor">
+    Login, signup, and score endpoints.
+  </Card>
+  <Card title="ScortonJS" icon="code" href="/sdks/scortonjs">
+    CLI and SDK against api.scorton.dev.
+  </Card>
+</CardGroup>

@@ -1,0 +1,101 @@
+---
+title: Cyberscor
+description: Score domains via api.scorton.dev/v1/cyberscor and the portal scan gateway.
+---
+
+# Cyberscor
+
+Base path: `https://api.scorton.dev/v1/cyberscor`
+
+## Score (upstream)
+
+```bash
+curl -X POST "https://api.scorton.dev/v1/cyberscor/score" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <cyberscor_jwt>" \
+  -H "AUTH: <cyberscor_jwt>" \
+  -d '{
+    "target": "example.com",
+    "url": "https://example.com",
+    "domain": "example.com"
+  }'
+```
+
+Requires a valid Cyberscor JWT from [login](/api-reference/auth).
+
+Upstream may return container/runtime errors (e.g. 503). The Dev Portal catches these and returns a **portal-fallback** score instead when you go through `/api/scan` or `/api/gateway/cyberscor/score`.
+
+## Score via portal
+
+```bash
+curl -X POST "https://developers.scorton.dev/api/scan" \
+  -H "Content-Type: application/json" \
+  -H "x-api-key: scrt_…" \
+  -H "x-cyberscor-token: <cyberscor_jwt>" \
+  -d '{ "target": "example.com" }'
+```
+
+**Response shape (success)**
+
+```json
+{
+  "status": "success",
+  "message": "Scan completed",
+  "data": {
+    "target": "example.com",
+    "status": "completed",
+    "source": "cyberscor-upstream",
+    "score": 82,
+    "tier": "low",
+    "dns": {},
+    "headers": {},
+    "cyberscor": {},
+    "providers": {
+      "api": "https://api.scorton.dev",
+      "mcp": "https://mcp.scorton.dev",
+      "gateway": "/api/gateway/cyberscor/score"
+    }
+  }
+}
+```
+
+`source` is either `cyberscor-upstream` or `portal-fallback`.
+
+### Portal fallback fields
+
+When upstream is unavailable:
+
+```json
+{
+  "mode": "portal-fallback",
+  "target": "example.com",
+  "score": 60,
+  "tier": "medium",
+  "dns": { "a_records": ["…"] },
+  "headers": {
+    "strict_transport_security": true,
+    "x_frame_options": true,
+    "content_security_policy": false,
+    "x_content_type_options": true
+  },
+  "notes": [
+    "Upstream Cyberscor container runtime unavailable.",
+    "Score computed by portal gateway from live DNS + security headers."
+  ]
+}
+```
+
+## Related auth endpoints
+
+- `POST /v1/cyberscor/auth/signup`
+- `POST /v1/cyberscor/auth/login`
+
+See [Authentication](/api-reference/auth).
+
+## Catalog
+
+```bash
+curl "https://api.scorton.dev/v1"
+```
+
+Used by the portal Integrations page and `/api/mcp/health` status card.

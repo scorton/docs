@@ -15,7 +15,17 @@
           {
             "group": "Documentation",
             "pages": [
-              "introduction"
+              "introduction",
+              "quickstart",
+              "architecture",
+              "api-reference/auth",
+              "api-reference/platform-keys",
+              "api-reference/cyberscor",
+              "sdks/scortonjs",
+              "api-reference/trustscore",
+              "api-reference/mcp",
+              "api-reference/portal-gateway",
+              "dev-portal"
             ]
           },
           {

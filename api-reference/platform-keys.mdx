@@ -1,0 +1,92 @@
+---
+title: Platform keys
+description: Mint and verify scrt_ tokens issued by the Dev Portal.
+---
+
+# Platform keys
+
+Platform API keys unlock portal API, raw MCP, TrustScore, and Cyberscor security scoring (with optional JWT). The portal issues them. They look like `scrt_<hex>`.
+
+They replace the older Radar flow (`radar.scorton.tech` + JWT email form) for the Dev Portal stack.
+
+## Generate
+
+Requires a portal session from [https://developers.scorton.dev/auth](https://developers.scorton.dev/auth).
+
+```bash
+curl -X POST "https://developers.scorton.dev/api/generate-key" \
+  -H "Authorization: Bearer <portal_session>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Local CLI",
+    "level": "free"
+  }'
+```
+
+**200 response**
+
+```json
+{
+  "status": "success",
+  "message": "API key generated",
+  "data": {
+    "client_id": "uuid",
+    "key": "scrt_…",
+    "name": "Local CLI",
+    "level": "free",
+    "expire_at": null,
+    "created_at": "…"
+  }
+}
+```
+
+Copy `data.key`. Listing keys returns that same value as `key`, plus `key_prefix` for display. The API Tokens page can reveal it again.
+
+## List
+
+```bash
+curl "https://developers.scorton.dev/api/list-keys" \
+  -H "Authorization: Bearer <portal_session>"
+```
+
+## Verify
+
+```bash
+curl "https://developers.scorton.dev/api/verify-key" \
+  -H "x-api-key: scrt_…"
+```
+
+**200 response**
+
+```json
+{
+  "status": "success",
+  "message": "API key valid",
+  "data": {
+    "client_id": "…",
+    "api_key_id": "…",
+    "level": "free",
+    "email": "dev@example.com"
+  }
+}
+```
+
+**401** — invalid key.
+
+## Where keys are accepted
+
+Use `x-api-key: scrt_…` or `Authorization: Bearer scrt_…`. For upstream Cyberscor scoring, also send `x-cyberscor-token: <jwt>`.
+
+| Route | Header |
+| --- | --- |
+| `GET /api/verify-key` | `x-api-key` or Bearer `scrt_` |
+| `POST /api/scan` | `x-api-key` or Bearer `scrt_` (+ optional `x-cyberscor-token`) |
+| `POST /api/mcp` | `x-api-key` or Bearer `scrt_` (raw MCP for Cursor) |
+| `POST /api/gateway/access-check` | `x-api-key` or Bearer `scrt_` (+ optional JWT) |
+| `POST /api/gateway/mcp` | `x-api-key` or Bearer `scrt_` (wrapped response) |
+| `POST /api/gateway/trustscore` | `x-api-key` or Bearer `scrt_` |
+| `POST /api/gateway/cyberscor/score` | `x-api-key` or Bearer `scrt_` (+ optional JWT) |
+
+## Levels
+
+`level` defaults to `free`. Stored on the key row; portal UI shows it as `read:<level>`.

@@ -1,0 +1,51 @@
+---
+title: TrustScore
+description: Review structured findings via api.scorton.dev/v1/trustscore.
+---
+
+# TrustScore
+
+Base path: `https://api.scorton.dev/v1/trustscore`
+
+## Review (upstream)
+
+```bash
+curl -X POST "https://api.scorton.dev/v1/trustscore/review" \
+  -H "Content-Type: application/json" \
+  -H "x-api-key: <service_or_api_key>" \
+  -H "Authorization: Bearer <service_or_api_key>" \
+  -d '{
+    "findings": [
+      {
+        "check": "url_analyze",
+        "target": "example.com",
+        "source": "dev-portal"
+      }
+    ]
+  }'
+```
+
+## Review via portal gateway
+
+Platform token → portal verifies → server uses `SCORTON_API_KEY`:
+
+```bash
+curl -X POST "https://developers.scorton.dev/api/gateway/trustscore" \
+  -H "Content-Type: application/json" \
+  -H "x-api-key: scrt_…" \
+  -d '{
+    "findings": [
+      { "check": "headers", "severity": "missing_csp", "target": "example.com" }
+    ]
+  }'
+```
+
+Requires `SCORTON_API_KEY` in the portal server environment.
+
+## When to use TrustScore vs Cyberscor
+
+| Use | Endpoint |
+| --- | --- |
+| Domain CyberScore | Cyberscor `/score` or portal `/api/scan` |
+| Structured finding review | TrustScore `/review` |
+| Agent / IDE tools | MCP (often wraps similar risk logic) |

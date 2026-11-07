@@ -1,0 +1,67 @@
+---
+title: ScortonJS
+description: OSS CLI and SDKs for scanning and CyberScore — js.scorton.dev.
+---
+
+# ScortonJS
+
+Product site: [js.scorton.dev](https://js.scorton.dev) (also advertised as `js.scorton.tech`).
+
+ScortonJS is the open-source developer interface for scan / score / audit / compliance. Point it at the **same** `.dev` API the portal uses.
+
+## Install
+
+```bash
+pip install scortonjs
+```
+
+```bash
+scorton score example.com
+scorton audit example.com
+scorton scan ssl_scan https://example.com
+```
+
+npm CLI package referenced by the portal: [scortonjs-cli](https://www.npmjs.com/package/scortonjs-cli).
+
+## TypeScript
+
+```ts
+import { ScortonClient } from '@scorton/cli'
+
+const scorton = new ScortonClient({
+  apiKey: process.env.SCORTON_API_KEY,
+})
+
+const result = await scorton.scan('example.com')
+```
+
+## Python
+
+```python
+from scorton import ScortonClient
+
+client = ScortonClient(
+    api_base="https://api.scorton.dev",
+    token="your-cyberscor-jwt-or-service-key",
+)
+
+result = client.call_api("dns_enum", "example.com")
+```
+
+<Warning>
+Older snippets on js.scorton.dev may show `api.scorton.tech`. For this Dev Portal stack, use **`https://api.scorton.dev`**.
+</Warning>
+
+## How it fits the portal
+
+| Goal | Prefer |
+| --- | --- |
+| Interactive try / keys / MCP gateway | Dev Portal |
+| Local CLI / CI / scripts | ScortonJS |
+| Agent tools in Cursor | MCP (`mcp.scorton.dev` or portal gateway) |
+
+## Links
+
+- GitHub: [scorton/scortonjs](https://github.com/scorton/scortonjs)
+- Marketing: [js.scorton.dev](https://js.scorton.dev)
+- Portal Integrations: [https://developers.scorton.dev/integrations](https://developers.scorton.dev/integrations)

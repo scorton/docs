@@ -1,0 +1,82 @@
+---
+title: Portal gateway
+description: Dev Portal /api/gateway routes that gate api.scorton.dev and MCP behind scrt_ tokens.
+---
+
+# Portal gateway
+
+All gateway routes run on the Dev Portal (`https://developers.scorton.dev`) and require a platform key:
+
+```http
+x-api-key: scrt_…
+```
+
+or `Authorization: Bearer scrt_…`. Optional for upstream Cyberscor security scoring:
+
+```http
+x-cyberscor-token: <cyberscor_jwt>
+```
+
+For Cursor / Claude, prefer the raw MCP endpoint `POST /api/mcp` (see [MCP](/api-reference/mcp)) — it returns upstream JSON-RPC without a portal envelope.
+
+## Access check
+
+Probes MCP health, TrustScore reachability (if configured), and Cyberscor score resolution.
+
+```bash
+curl -X POST "https://developers.scorton.dev/api/gateway/access-check" \
+  -H "Content-Type: application/json" \
+  -H "x-api-key: scrt_…" \
+  -H "x-cyberscor-token: <jwt>" \
+  -d '{ "target": "example.com" }'
+```
+
+Returns per-check status and a `ready_for_prod` / `blockers` style summary (used after token creation in the UI).
+
+## Cyberscor score
+
+```bash
+curl -X POST "https://developers.scorton.dev/api/gateway/cyberscor/score" \
+  -H "Content-Type: application/json" \
+  -H "x-api-key: scrt_…" \
+  -H "x-cyberscor-token: <jwt>" \
+  -d '{ "target": "example.com" }'
+```
+
+Same resolver as `POST /api/scan` (upstream → portal fallback).
+
+## TrustScore proxy
+
+```bash
+curl -X POST "https://developers.scorton.dev/api/gateway/trustscore" \
+  -H "Content-Type: application/json" \
+  -H "x-api-key: scrt_…" \
+  -d '{ "findings": [] }'
+```
+
+Needs `SCORTON_API_KEY` on the server.
+
+## MCP proxy
+
+See [MCP](/api-reference/mcp).
+
+```bash
+curl -X POST "https://developers.scorton.dev/api/gateway/mcp" \
+  -H "Content-Type: application/json" \
+  -H "x-api-key: scrt_…" \
+  -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+```
+
+## Scan shortcut
+
+`POST /api/scan` is the Scan URL page endpoint — same auth model as the Cyberscor gateway, returns a normalized portal response.
+
+## Env vars
+
+| Variable | Scope | Purpose |
+| --- | --- |
+| `NEXT_PUBLIC_SCORTON_API_URL` | Public | Default `https://api.scorton.dev` |
+| `NEXT_PUBLIC_SCORTON_MCP_URL` | Public | Default `https://mcp.scorton.dev` |
+| `NEXT_PUBLIC_DOCS_URL` | Public | Docs link in the portal header. Local default `http://localhost:3000` |
+| `NEXT_PUBLIC_APP_URL` | Public | Stripe return origin. Production `https://developers.scorton.dev` |
+| `SCORTON_API_KEY` | Server | Unlocks MCP / TrustScore proxies |
