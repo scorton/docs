@@ -1,73 +1,40 @@
 ---
 title: "Introduction"
-description: "Official documentation for the Scorton API — powering Cyberscor with advanced cybersecurity scanning capabilities."
+description: "The Scorton Developer Portal at developers.scorton.dev: tokens, CyberScore, and MCP."
 ---
 
-<img
-  className="hidden dark:block"
-  src="/images/intro-scorton-docs.png"
-  alt="Scorton Hero Dark"
-/>
-<img
-  className="dark:hidden"
-  src="/images/intro-scorton-docs.png"
-  alt="Scorton Hero Light"
-/>
+# Scorton Developer Portal
 
-## Welcome to Scorton API
+The app is [developers.scorton.dev](https://developers.scorton.dev). Sign in, mint an `scrt_` key, score a domain, and connect MCP. These pages follow that app, not the older Radar or `api.scorton.tech` flows.
 
-The **Scorton API** is the backbone of **Cyberscor**, providing a comprehensive suite of cybersecurity scanning tools.\
-It enables the automated analysis of domains and IPs through multiple integrated modules to assess vulnerabilities, configuration issues, and security posture.
+Open it at [developers.scorton.dev/auth](https://developers.scorton.dev/auth).
 
----
+## What the portal contains
 
-## Getting Started
+| Area | Path | What you do |
+| --- | --- | --- |
+| Dashboard | `/` | See whether `api.scorton.dev` and `mcp.scorton.dev` are up |
+| API Tokens | `/tokens` | Create a platform key (`scrt_…`) |
+| Scan URL | `/scan` | Verify the key and score a host |
+| Integrations | `/integrations` | Copy the MCP config and gateway routes |
+| Profile | `/profile` | Account details |
+| Usage | `/usage` | Calls this period |
+| Activity | `/activity` | Recent requests |
+| Settings | `/settings` | Plan, billing, and webhooks |
 
-<CardGroup cols={2}>
-  <Card icon="lock" href="/api-reference/endpoint/auth/post_login" title="Authentication">
-    Learn how to authenticate and securely access the Scorton API.
-  </Card>
-  <Card icon="search" href="/api-reference/endpoint/scans/post_scan" title="First Scan">
-    Run your first target scan and analyze its security status in seconds.
-  </Card>
-</CardGroup>
-
----
-
-## Available scan features
-
-These features are now available from the scanning tool of the API.
+## Where to go next
 
 <CardGroup cols={2}>
-  <Card icon="flag" title="DNS Analysis">
-    Inspect domain records to identify potential misconfigurations.
+  <Card title="Quickstart" icon="rocket" href="/quickstart">
+    Sign in, mint a token, score a domain.
   </Card>
-  <Card icon="wifi" title="Open Port Scan">
-    Detect exposed services and assess their security risk.
+  <Card title="Platform keys" icon="key" href="/api-reference/platform-keys">
+    How `scrt_` keys are issued and checked.
   </Card>
-</CardGroup>
-
-## Work in progress scan features
-
-These features will be added soon to the list of scan tools.
-
-<CardGroup cols={2}>
-  <Card icon="id-card" title="WHOIS Scan">
-    Retrieve domain registration and ownership details.
+  <Card title="Cyberscor" icon="shield" href="/api-reference/cyberscor">
+    Score a host through the portal or the API.
   </Card>
-  <Card icon="server" title="HTTP Headers Check">
-    Evaluate HTTP headers for missing or insecure configurations.
-  </Card>
-  <Card icon="shield" title="SSL/TLS Analysis">
-    Verify certificate validity and encryption strength.
-  </Card>
-  <Card icon="bug" title="XSS Detection">
-    Identify cross-site scripting vulnerabilities.
-  </Card>
-  <Card icon="cookie" title="Cookie Validation">
-    Inspect cookies for secure, HttpOnly, and SameSite flags.
-  </Card>
-  <Card icon="gauge" title="Security Scoring">
-    Generate a global security score for each analyzed target.
+  <Card title="MCP" icon="robot" href="/api-reference/mcp">
+    Point Cursor or Claude at the portal.
   </Card>
 </CardGroup>

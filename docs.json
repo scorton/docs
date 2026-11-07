@@ -103,6 +103,10 @@
   "navbar": {
     "links": [
       {
+        "href": "https://developers.scorton.dev",
+        "label": "Portal"
+      },
+      {
         "label": "Support",
         "href": "https://scorton.tech/support"
       }
@@ -110,7 +114,7 @@
     "primary": {
       "type": "button",
       "label": "Get Started",
-      "href": "https://beta.scorton.tech/"
+      "href": "https://developers.scorton.dev"
     }
   },
   "footer": {
