@@ -3,8 +3,8 @@
   "name": "Scorton",
   "colors": {
     "primary": "#F2C94C",
-    "light": "#FFF9E6",
-    "dark": "#F2C94C"
+    "light": "#FFE566",
+    "dark": "#E5B80B"
   },
   "favicon": "/favicon.svg",
   "navigation": {
@@ -120,6 +120,19 @@
   "footer": {
     "socials": {
       "github": "https://github.com/scorton"
+    }
+  },
+  "background": {
+    "decoration": "gradient"
+  },
+  "fonts": {
+    "heading": {
+      "family": "Sora",
+      "weight": 700
+    },
+    "body": {
+      "family": "DM Sans",
+      "weight": 400
     }
   }
 }
